@@ -4,9 +4,9 @@ import mysql.connector as connector
 # user = 'ngn'
 # password = 'ngn@ngn'
 # database = 'phao_lsd'
-host = 'localhost'
-user = 'root'
-password = ''
+host = 'db'
+user = 'ngn'
+password = 'ngn@ngn'
 database = 'phao_lsd'
 
 def get_conn():
