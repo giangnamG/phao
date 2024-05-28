@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    container_name: phao_lsd_container
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+        - internal
+
+  db:
+    container_name: db_phao_lsd
+    image: mariadb:10.4.12
+    restart: unless-stopped
+    command:  mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci  --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    environment:
+      MYSQL_ROOT_PASSWORD: 'ngn@ngn'
+      MYSQL_DATABASE: 'phao_lsd'
+      MYSQL_USER: 'ngn'
+      MYSQL_PASSWORD: 'ngn@ngn'
+    volumes:
+        - ./server/database/questions.sql:/docker-entrypoint-initdb.d/questions.sql
+        - ./db:/var/lib/mysql
+    networks:
+        - internal
+networks:
+    internal:
+        driver: bridge
